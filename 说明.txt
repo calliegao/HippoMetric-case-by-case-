@@ -1,0 +1,10 @@
+需要提前安装deformetrica环境：https://gitlab.com/icm-institute/aramislab/deformetrica
+然后进入到deformetrica环境，再执行run_HippoMetric.py
+
+这版是只处理一个指定被试ID，执行run_HippoMetric.py可以跑完从freesurfer海马亚区分割到形态建模的整个流程。
+所以说需要你先有Fressurfer的的分割结果。
+
+强烈建议用GPU，不然会非常非常慢！如果用GPU的话需要将optimization_parameters.xml中的gpu-mode状态改为auto。
+
+示例数据太大了传不上去，我单独发给你们。
+
