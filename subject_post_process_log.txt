@@ -1,0 +1,60 @@
+2025-05-21 09:23:07,802 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:23:08,996 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:23:08,996 - ERROR - Command: python process_subject.py 002_S_0413 Left group1
+2025-05-21 09:23:08,996 - ERROR - Exit status: 1
+2025-05-21 09:23:08,996 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:23:10,154 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:23:10,154 - ERROR - Command: python process_subject.py 002_S_0413 Right group1
+2025-05-21 09:23:10,154 - ERROR - Exit status: 1
+2025-05-21 09:24:35,885 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:24:37,799 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:24:37,799 - ERROR - Command: python process_subject.py 002_S_0413 Left group1
+2025-05-21 09:24:37,799 - ERROR - Exit status: 1
+2025-05-21 09:24:37,799 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:24:40,086 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:24:40,086 - ERROR - Command: python process_subject.py 002_S_0413 Right group1
+2025-05-21 09:24:40,086 - ERROR - Exit status: 1
+2025-05-21 09:25:27,412 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:25:29,112 - INFO - Finished post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:25:29,113 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:25:30,783 - INFO - Finished post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:53:45,866 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:53:48,511 - INFO - Finished post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 09:53:48,512 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 09:53:50,362 - INFO - Finished post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:13:50,636 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:13:52,799 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:13:52,800 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Left', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfields.xlsx')]
+2025-05-21 10:13:52,800 - ERROR - Exit status: 1
+2025-05-21 10:13:52,800 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:13:54,951 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:13:54,952 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Right', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfields.xlsx')]
+2025-05-21 10:13:54,952 - ERROR - Exit status: 1
+2025-05-21 10:18:34,213 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:18:35,956 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:18:35,957 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Left', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfields.xlsx')]
+2025-05-21 10:18:35,957 - ERROR - Exit status: 1
+2025-05-21 10:18:35,957 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:18:37,639 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:18:37,640 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Right', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfields.xlsx')]
+2025-05-21 10:18:37,640 - ERROR - Exit status: 1
+2025-05-21 10:19:05,994 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:19:08,099 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:19:08,100 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Left', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfield_list_python.xlsx')]
+2025-05-21 10:19:08,100 - ERROR - Exit status: 1
+2025-05-21 10:19:08,100 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:19:10,125 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:19:10,125 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Right', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfield_list_python.xlsx')]
+2025-05-21 10:19:10,125 - ERROR - Exit status: 1
+2025-05-21 10:28:57,751 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:28:59,728 - ERROR - Error for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:28:59,729 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Left', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfield_list_python.xlsx')]
+2025-05-21 10:28:59,729 - ERROR - Exit status: 1
+2025-05-21 10:28:59,729 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:29:01,883 - ERROR - Error for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:29:01,884 - ERROR - Command: ['python', 'process_subject.py', '002_S_0413', 'Right', 'group1', '--baseline_path', PosixPath('/home/nagao/test_case/output/Baseline'), '--followup_path', PosixPath('/home/nagao/test_case/output/FollowUps'), '--subfield_file', PosixPath('/home/nagao/test_case/subfield_list_python.xlsx')]
+2025-05-21 10:29:01,884 - ERROR - Exit status: 1
+2025-05-21 10:30:12,705 - INFO - Starting post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:36:17,511 - INFO - Finished post-process for subject: 002_S_0413, side: Left, group: group1
+2025-05-21 10:36:17,512 - INFO - Starting post-process for subject: 002_S_0413, side: Right, group: group1
+2025-05-21 10:43:32,278 - INFO - Finished post-process for subject: 002_S_0413, side: Right, group: group1

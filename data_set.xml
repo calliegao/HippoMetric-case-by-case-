@@ -1,0 +1,12 @@
+<data-set>
+	<subject id="sub_test">
+		<visit id="hippo_t0">
+			<age>0</age>
+			<filename object_id="hippo">/home/nagao/test_case/data/source_Left.vtk</filename>
+		</visit>
+		<visit id="hippo_t1">
+			<age>3</age>
+			<filename object_id="hippo">/home/nagao/test_case/output/Baseline/Left/group1/002_S_0413/Scan12/Remesh_combined_label_transformed.vtk</filename>
+		</visit>
+	</subject>
+</data-set>
