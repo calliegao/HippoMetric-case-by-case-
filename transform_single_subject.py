@@ -36,12 +36,12 @@ def run_regression(case_dir, model_xml_path, opt_param_xml_path, cache_dir):
     os.environ['MKL_SERVICE_FORCE_INTEL'] = '1'
 
     os.makedirs(cache_dir, exist_ok=True)
-    os.system(f"cp {case_dir}/data_set.xml {cache_dir}")
+    # os.system(f"cp {case_dir}/data_set.xml {cache_dir}")
 
     outputdir = os.path.join(case_dir, "output")
     os.makedirs(outputdir, exist_ok=True)
 
-    cmd = f"deformetrica estimate {model_xml_path} data_set.xml -p {opt_param_xml_path} -o {outputdir}"
+    cmd = f"deformetrica estimate {model_xml_path} {case_dir}/data_set.xml -p {opt_param_xml_path} -o {outputdir}"
     print(f"Running command: {cmd}")  # 打印命令行，便于检查
     
     dist = 0
@@ -51,7 +51,7 @@ def run_regression(case_dir, model_xml_path, opt_param_xml_path, cache_dir):
     for cyclnum in range(N):
         if dist < eps:
             print(f"[INFO] Regression round {cyclnum+1}")
-            print(f"[INFO] Distance between surfaces at round {cyclnum+1}: {dist:.6f}")
+            
             kernel_width = 3 + cyclnum * 0.5
             change_one_xml(model_xml_path, './/deformation-parameters/kernel-width', str(kernel_width))
             os.system(cmd)
@@ -60,6 +60,7 @@ def run_regression(case_dir, model_xml_path, opt_param_xml_path, cache_dir):
             vtk3 = f"{outputdir}/GeodesicRegression__GeodesicFlow__hippo__tp_3__age_3.00.vtk"
 
             dist = CalculateSurfDist(vtk3, vtk1)
+            print(f"[INFO] Distance between surfaces at round {cyclnum+1}: {dist:.6f}")
         else:
             print(f"[INFO] Regression succeeded at round {cyclnum+1}")
             return
