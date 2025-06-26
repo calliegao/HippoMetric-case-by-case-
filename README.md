@@ -8,7 +8,7 @@ This repository provides tools for:
 - Measureing subfield thickness
 - Measureing lamellar layer-wise thickness
 
-📘 Documentation: [https://hippometric.readthedocs.io](https://hippometric.readthedocs.io) (coming soon)
+📘 Documentation: [https://hippometric-case-by-case.readthedocs.io](https://hippometric-case-by-case.readthedocs.io) (coming soon)
 
 ## Quick Start
 
