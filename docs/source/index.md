@@ -21,14 +21,10 @@ HippoMetric is designed for researchers in neuroimaging and computational anatom
 
 ## 📚 Table of Contents
 
-- [Installation Guide](install.md)
+- [Installation Guide](installation.md)
 - [Getting Started](quickstart.md)
-- [Python Modules](modules.md)
-- [Examples & Outputs](examples.md)
-- [References](references.md)
-- [Authors & Contributors](authors.md)
-- [License](license.md)
-- [FAQ](faq.md)
+- [Examples](examples.md)
+- [References](References.md)
 
 ---
 
