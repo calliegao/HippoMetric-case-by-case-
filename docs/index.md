@@ -1,3 +1,13 @@
+```{toctree}
+:maxdepth: 2
+:caption: Contents
+
+installation.md
+quickstart.md
+examples.md
+References.md
+```
+
 # Welcome to the HippoMetric Documentation
 
 [![Python Version](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
