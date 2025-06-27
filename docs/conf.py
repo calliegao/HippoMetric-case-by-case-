@@ -30,6 +30,7 @@ html_static_path = ['_static']
 # 添加 Markdown 支持
 extensions = [
     'myst_parser',
+    'sphinx_rtd_theme',
 ]
 
 # 支持 .md 文件
