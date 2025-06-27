@@ -1,4 +1,4 @@
-# Examples
+# 👩‍🔬 Examples
 
 ## Overview
 Brief introduction about what examples are included and how to use them.
