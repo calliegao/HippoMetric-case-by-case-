@@ -1,3 +1,7 @@
+# Welcome to the HippoMetric Documentation
+
+This documentation provides a detailed guide to install and use the **HippoMetric** pipeline.
+
 ```{toctree}
 :maxdepth: 2
 :caption: Contents
@@ -7,8 +11,6 @@ quickstart.md
 examples.md
 References.md
 ```
-
-# Welcome to the HippoMetric Documentation
 
 [![Python Version](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](license.md)
