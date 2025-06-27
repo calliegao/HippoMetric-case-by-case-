@@ -12,7 +12,7 @@ Despite morphological variability, the hippocampus exhibits a consistent **lamel
 
 Modeling the hippocampus according to this biologically grounded lamellar framework offers a more consistent and anatomically faithful basis for morphological analysis than traditional boundary- or skeleton-based methods.
 
-<img src="./images/Figure1.png" alt="Figure 1. Lamellar organization of the hippocampus" width="400"/>
+<img src="images/Figure1.png" alt="Figure 1. Lamellar organization of the hippocampus" width="400"/>
 
 ---
 
@@ -31,7 +31,7 @@ In 3D medial geometry, each point on the medial surface defines **spoke vectors*
 
 This **radial map** ensures a one-to-one correspondence between the medial surface and the object boundary, enabling precise reconstruction and consistent shape comparisons. These properties make medial-axis geometry particularly suitable for analyzing anatomical structures with complex curvature, such as the hippocampus.
 
-<img src="./images/Figure2.png" alt="Figure 2. Medial axis" width="600"/>
+<img src="images/Figure2.png" alt="Figure 2. Medial axis" width="600"/>
 
 ---
 
