@@ -96,6 +96,7 @@ python run_HippoMetric.py
 The run_HippoMetric.py script includes 10 modular steps, which can be selectively executed by adjusting the flags in the script (e.g., run_step1=True). This allows flexible control and easy debugging of each processing stage.
 
 Below is a description of each step for your reference:
+
 ⚠️ There's no need to manually run each step individually — the script orchestrates all components in the correct order.
 
 - Step 1. Hippocampal Subfield Segmentation
