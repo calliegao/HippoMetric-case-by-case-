@@ -115,54 +115,59 @@ Below is a description of each step for your reference:
   
   This step converts the segmented hippocampal labels to surface meshes and merges 10 subfields (CA1, CA3, CA4, Sub, Sub_pre, Sub_para, GC_DG, Mole_layer, 
   HATA, Tail) into one combined hippocampal label.
+  
   Output is saved to the output/Surf/ folder.
 
 - **Step 3. Surface Refinement**
   
   This step smooths the boundary and simplifies the mesh from Step 2.
+  
   Output is saved to output/RefinedSurf/.
 
-- Step 4. Surface Rigid Registration
+- **Step 4. Surface Rigid Registration**
   
-This step performs rigid registration of baseline (e.g., scan01) surfaces to a template. Follow-up scans (scan02, etc.) are registered to the baseline surface.
+  This step performs rigid registration of baseline (e.g., scan01) surfaces to a template. Follow-up scans (scan02, etc.) are registered to the baseline 
+  surface.
 
-Results are saved in output/RegedRefinedSurf/.
+  Results are saved in output/RegedRefinedSurf/.
 
-- Step 5. Split Baseline and Follow-ups
+- **Step 5. Split Baseline and Follow-ups**
   
-This step separates each subject’s scans into Baseline and FollowUps folders for further modeling.
+  This step separates each subject’s scans into Baseline and FollowUps folders for further modeling.
 
-- Step 6. Generate and Update Deformation Configurations
+- **Step 6. Generate and Update Deformation Configurations**
   
-This step generates and modifies configuration files: model_L.xml, model_R.xml, and data_set.xml for each baseline scan.
+  This step generates and modifies configuration files: model_L.xml, model_R.xml, and data_set.xml for each baseline scan.
 
-- Step 7. Template-to-Subject Diffeomorphic Deformation
+- **Step 7. Template-to-Subject Diffeomorphic Deformation**
   
-This step performs diffeomorphic shape registration from the template to each subject’s baseline hippocampus, generating an initial skeletal representation.
-Results are saved in:
-
-```bash
-/output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/output/
-```
-
-- Step 8. Extract Spokes (Skeletal Vectors)
+  This step performs diffeomorphic shape registration from the template to each subject’s baseline hippocampus, generating an initial skeletal 
+  representation.
   
-This step extracts the skeletal representation from Step 7 into two separate point sets: base points and terminal points of spokes.
-Outputs are saved as:
+  Results are saved in:
 
-```bash
-/output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/*.pt.vtk  
-/output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/*.ps.vtk
-```
-- Step 9. Refine Spokes
+  ```bash
+  /output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/output/
+  ```
+
+- **Step 8. Extract Spokes (Skeletal Vectors)**
   
-This step refines spokes based on medial-axis geometric constraints and applies the same process to follow-up scans.
+  This step extracts the skeletal representation from Step 7 into two separate point sets: base points and terminal points of spokes.
+  Outputs are saved as:
 
-- Step 10. Merge Baseline and Follow-ups
+  ```bash
+  /output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/*.pt.vtk  
+  /output/Baseline/<Side>/<Group>/<Subject ID>/<Scan>/*.ps.vtk
+  ```
+- **Step 9. Refine Spokes**
   
-Finally, this step merges the baseline data back into the FollowUps folder, so all timepoints are stored together for downstream analysis. 
+  This step refines spokes based on medial-axis geometric constraints and applies the same process to follow-up scans.
 
-If a subject has only a baseline scan, the merged FollowUps folder will contain only this single scan.
+- **Step 10. Merge Baseline and Follow-ups**
+  
+  Finally, this step merges the baseline data back into the FollowUps folder, so all timepoints are stored together for downstream analysis. 
+
+  If a subject has only a baseline scan, the merged FollowUps folder will contain only this single scan.
 
 ### 3. Compute Hippocampal Morphometric Measures
 
