@@ -45,7 +45,8 @@ HippoMetric is designed for researchers in neuroimaging and computational anatom
 - **Na Gao**, Shenzhen Bay Laboratory  
 - **Xingyu Hao**, Harbin Institution of Technology (Shenzhen) 
 - **Chenfei Ye**, Harbin Institution of Technology (Shenzhen)  
-- **Ting Ma**, Harbin Institution of Technology (Shenzhen)   
+- **Ting Ma**, Harbin Institution of Technology (Shenzhen)
+- **Tengfei Guo**, Shenzhen Bay Laboratory  
 
 We welcome community contributions! See [Contributing Guidelines](contributing.md) or submit a pull request on GitHub.
 
