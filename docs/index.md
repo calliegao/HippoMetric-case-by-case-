@@ -67,5 +67,5 @@ For questions, bug reports, or suggestions:
 
 ---
 
-© 2025, Na Gao, Xingyu Hao, Chenfei Ye, Ting Ma  
+© 2025, Na Gao, Xingyu Hao, Chenfei Ye, Ting Ma, Tengfei Ye   
 Built with [Sphinx](https://www.sphinx-doc.org/) • Hosted by [Read the Docs](https://readthedocs.io)
