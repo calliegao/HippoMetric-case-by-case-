@@ -143,7 +143,7 @@ The green surface represents the template, while the red surfaces represent the 
 
 Example: Below is the rigid registration result for one subject scanned three times.
 
-<img src="images/registration.png" alt="Results of surface ragid registration of a subject." width="400"/>
+<img src="_static/images/registration.png" alt="Results of surface ragid registration of a subject." width="400"/>
 
 ### 🔍 Check Spokes of the Skeletal Representation of Hippocampal Subfields
 After Step 9 (Refine Spokes), you can visualize the medial-axis spokes for a specific subject and subfield using:
@@ -159,6 +159,6 @@ A pop-up window will display the boundary surface and spoke vectors for the sele
 
 Example: Below are refined spoke visualizations for multiple hippocampal subfields.
 
-<img src="images/spokes.png" alt="Results of refined spokes of a subject." width="800"/>
+<img src="_static/images/spokes.png" alt="Results of refined spokes of a subject." width="800"/>
 
 
