@@ -99,25 +99,28 @@ Below is a description of each step for your reference:
 
 ⚠️ There's no need to manually run each step individually — the script orchestrates all components in the correct order.
 
-- Step 1. Hippocampal Subfield Segmentation
+- **Step 1. Hippocampal Subfield Segmentation**
   
-This step calls FreeSurfer’s segmentHA_T1.sh <subject_id> to perform subfield segmentation.
-FreeSurfer supports GPU acceleration for this step.  
-If you prefer to run this segmentation separately (e.g., in batch mode), we highly recommend you set `run_step1=False` in the script, and use GPU to accelerate hippocampal subfield segmentation via the `segmentHA_T1.sh` script.
+  This step calls FreeSurfer’s segmentHA_T1.sh <subject_id> to perform subfield segmentation.
+  FreeSurfer supports GPU acceleration for this step.  
 
-```bash
-segmentHA_T1.sh <subject_id> --gpu
-```
+  If you prefer to run this segmentation separately (e.g., in batch mode), we highly recommend you set `run_step1=False` in the script, and use GPU to 
+  accelerate hippocampal subfield segmentation via the `segmentHA_T1.sh` script.
 
-- Step 2. Convert Labels to Surfaces
+  ```bash
+  segmentHA_T1.sh <subject_id> --gpu
+  ```
+
+- **Step 2. Convert Labels to Surfaces**
   
-This step converts the segmented hippocampal labels to surface meshes and merges 10 subfields (CA1, CA3, CA4, Sub, Sub_pre, Sub_para, GC_DG, Mole_layer, HATA, Tail) into one combined hippocampal label.
-Output is saved to the output/Surf/ folder.
+  This step converts the segmented hippocampal labels to surface meshes and merges 10 subfields (CA1, CA3, CA4, Sub, Sub_pre, Sub_para, GC_DG, Mole_layer, 
+  HATA, Tail) into one combined hippocampal label.
+  Output is saved to the output/Surf/ folder.
 
-- Step 3. Surface Refinement
+- **Step 3. Surface Refinement**
   
-This step smooths the boundary and simplifies the mesh from Step 2.
-Output is saved to output/RefinedSurf/.
+  This step smooths the boundary and simplifies the mesh from Step 2.
+  Output is saved to output/RefinedSurf/.
 
 - Step 4. Surface Rigid Registration
   
