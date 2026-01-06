@@ -3,7 +3,7 @@
 HippoMetric is a hippocampal morphometry pipeline based on medial-axis geometry.
 
 This repository provides tools for:
-- Surface-based hippocampal modeling
+- Skeletal-representation-based hippocampal modeling
 - Measureing whole hippocampal length, width, thickness
 - Measureing subfield thickness
 - Measureing lamellar layer-wise thickness
