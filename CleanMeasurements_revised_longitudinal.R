@@ -10,6 +10,34 @@ df <- read_excel(file_path)
 # 需要排除的非特征列
 exclude_cols <- c("Subject ID", "Scan ID", "Side", "Group")
 
+# --- 重命名特征列（基于列位置顺序，不依赖原始列名内容）---
+# 总特征列数应为 549 (Inf) + 549 (Sup) + 64 (CrestLength) = 1162
+all_cols <- colnames(df)
+is_feature <- !all_cols %in% exclude_cols   # 标记特征列
+feature_pos <- which(is_feature)            # 特征列在 df 中的位置索引（按原始顺序）
+
+# 第 1~549 列：保持为 combined_label InfThickness 1~549（无需修改）
+# 第 550~1098 列（共549列）：重命名为 combined_label SupThickness 1~549
+if (length(feature_pos) >= 1098) {
+  sup_pos <- feature_pos[550:1098]
+  colnames(df)[sup_pos] <- paste0("combined_label SupThickness ", 1:549)
+}
+
+# 第 1099~1162 列（共64列）：重命名为 CrestLength 1~64
+if (length(feature_pos) >= 1162) {
+  crest_pos <- feature_pos[1099:1162]
+  colnames(df)[crest_pos] <- paste0("CrestLength ", 1:64)
+}
+
+# 此时，df 中所有特征列的列名已修正：
+# - 前549列: combined_label InfThickness 1~549
+# - 接着549列: combined_label SupThickness 1~549
+# - 最后64列: CrestLength 1~64
+# ========== 输出更正后的原始表格 ==========
+output_file <- "E:/HippoAnalysis/Measures2_AV1451_PET_ABETA_MRI_corrected.csv"
+write.csv(df, output_file, row.names = FALSE)
+cat("已保存修正后的表格至：", output_file, "\n")
+
 # 提取所有特征列（包括 "combined_label"）
 all_feature_cols <- setdiff(colnames(df), exclude_cols)
 
