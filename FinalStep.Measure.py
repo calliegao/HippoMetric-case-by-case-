@@ -6,8 +6,46 @@ import vtk
 from vtk.util import numpy_support
 import scipy.io
 
-# Read point data from a VTK file
+def build_skeleton_order(point_order):
+    """
+    Build skeletonPt_order according to MATLAB logic (17x31, 0-based indexing)
+    
+    Parameters:
+        point_order: numpy array, shape (9, 65) or larger, storing 1-based point indices
+    
+    Returns:
+        skeletonPt_order: numpy array, shape (17, 31), dtype=int, 0-based indices
+    """
+    # Extract SkelLat (columns 0:32)
+    SkelLat = point_order[:, 0:32]  # shape (9, 32)
+    
+    # Extract SkelVen (columns 33:65)
+    SkelVen = point_order[:, 33:65]  # shape (9, 32)
+    
+    # Flip upside down (flipud)
+    Ranged_SkelVen = np.flip(SkelVen, axis=0)  # shape (9, 32)
+    # Flip left to right (fliplr)
+    Ranged_SkelVen = np.flip(Ranged_SkelVen, axis=1)  # shape (9, 32)
+    
+    # Vertical concatenation
+    SkelOrder = np.vstack([Ranged_SkelVen, SkelLat])  # shape (18, 32)
+    
+    # Delete row 8 (MATLAB row 9)
+    SkelOrder = np.delete(SkelOrder, 8, axis=0)  # shape (17, 32)
+    
+    # Delete column 0 (MATLAB column 1)
+    SkelOrder = np.delete(SkelOrder, 0, axis=1)  # shape (17, 31)
+    
+    # Convert to 0-based indexing if values start from 1
+    if np.min(SkelOrder) == 1:
+        SkelOrder = SkelOrder - 1
+    
+    return SkelOrder
+
 def read_vtk_points(vtk_file):
+    """
+    Read point coordinates from a VTK file
+    """
     reader = vtk.vtkPolyDataReader()
     reader.SetFileName(vtk_file)
     reader.Update()
@@ -15,13 +53,15 @@ def read_vtk_points(vtk_file):
     points = polydata.GetPoints()
     points_np = numpy_support.vtk_to_numpy(points.GetData())
     
-    # Handle NaN values
+    # Replace NaN values with zero
     points_np = np.nan_to_num(points_np)
 
     return points_np
 
-# Compute subfield thickness
 def compute_thickness(pt_points, ps_points):
+    """
+    Compute subfield thickness using Euclidean distance
+    """
     return cdist(pt_points, ps_points, 'euclidean')
 
 def compute_width(SkelPt, skeletonPt_order, crest_spoke_length):
@@ -29,34 +69,32 @@ def compute_width(SkelPt, skeletonPt_order, crest_spoke_length):
     Compute the width of a subfield.
     
     Parameters:
-    - SkelPt: Skeleton point data, typically read from `{subfield}_ps_refined.vtk`.
-    - skeletonPt_order: Order of skeleton points, usually generated from `point_order` data.
-    - crest_spoke_length: Length of crest spokes, calculated from BdryPt and SkelPt.
+    - SkelPt: skeleton points, usually from `{subfield}_ps_refined.vtk`.
+    - skeletonPt_order: skeleton point order generated from point_order.
+    - crest_spoke_length: crest spoke lengths, calculated from BdryPt and SkelPt.
 
     Returns:
-    - width1: First width value, combined from skeleton points.
-    - width2: Second width value, combined from skeleton points.
+    - width1: first width value
+    - width2: second width value
     """
-    width1 = np.zeros(31)  # Compute length for each cross-section
-    width2 = np.zeros(31)  # Compute length for each cross-section
+    width1 = np.zeros(31)
+    width2 = np.zeros(31)
 
-    for width_n in range(31):  # range(31) corresponds to MATLAB 1:31
+    for width_n in range(31):
         sum_segment1 = 0
-        # MATLAB sn = 1:9, Python range(9)
-        for sn in range(9):  # Compute first cross-section width
+        for sn in range(9):
             each_segment = np.linalg.norm(SkelPt[skeletonPt_order[sn, width_n], :] - SkelPt[skeletonPt_order[sn+1, width_n], :])
             sum_segment1 += each_segment
 
         sum_segment2 = 0
-        # MATLAB sn = 9:16, Python range(8,16)
-        for sn in range(8, 16):  # Compute second cross-section width
+        for sn in range(8, 16):
             each_segment = np.linalg.norm(SkelPt[skeletonPt_order[sn, width_n], :] - SkelPt[skeletonPt_order[sn+1, width_n], :])
             sum_segment2 += each_segment
 
-        # Add crest point spoke length, exclude spokes 1 and 33
-        crest1 = crest_spoke_length[width_n]  # MATLAB width_n+1 -> Python width_n
-        crest2 = crest_spoke_length[63 - width_n]  # MATLAB 65-width_n -> Python 64-width_n
-        width1[width_n] = sum_segment2 + crest1
+        # Add crest spoke lengths
+        crest1 = crest_spoke_length[width_n+1]
+        crest2 = crest_spoke_length[63 - width_n]
+        width1[width_n] = sum_segment1 + crest1
         width2[width_n] = sum_segment2 + crest2
 
     return width1, width2
@@ -66,103 +104,79 @@ def compute_length(SkelPt, skeletonPt_order, crest_spoke_length):
     Compute the length of a subfield.
     
     Parameters:
-    - SkelPt: Skeleton point data, typically read from `{subfield}_ps_refined.vtk`.
-    - skeletonPt_order: Order of skeleton points, usually generated from `point_order` data.
-    - crest_spoke_length: Length of crest spokes, calculated from BdryPt and SkelPt.
+    - SkelPt: skeleton points, usually from `{subfield}_ps_refined.vtk`.
+    - skeletonPt_order: skeleton point order generated from point_order.
+    - crest_spoke_length: crest spoke lengths, calculated from BdryPt and SkelPt.
 
     Returns:
-    - Sub_length1: First length value, combined from skeleton points.
-    - Sub_length2: Second length value, combined from skeleton points.
+    - Sub_length1: first length value
+    - Sub_length2: second length value
     """
     sum_segment3 = 0
-    # MATLAB sn = 1:16, Python sn = 0:15
     for sn in range(16):
         each_segment2 = np.linalg.norm(SkelPt[skeletonPt_order[8, sn], :] - SkelPt[skeletonPt_order[8, sn+1], :])
         sum_segment3 += each_segment2
 
     sum_segment4 = 0
-    # MATLAB sn = 16:30, Python sn = 15:30
     for sn in range(15, 30):
         each_segment2 = np.linalg.norm(SkelPt[skeletonPt_order[8, sn], :] - SkelPt[skeletonPt_order[8, sn+1], :])
         sum_segment4 += each_segment2
 
-    # Compute length1 and length2
-    Sub_length1 = sum_segment3 + crest_spoke_length[0]  # MATLAB crest_spoke_length(1) -> Python crest_spoke_length[0]
-    Sub_length2 = sum_segment4 + crest_spoke_length[32]  # MATLAB crest_spoke_length(33) -> Python crest_spoke_length[32]
+    Sub_length1 = sum_segment3 + crest_spoke_length[0]
+    Sub_length2 = sum_segment4 + crest_spoke_length[32]
 
     return Sub_length1, Sub_length2
-    
+
 def load_point_order(mat_file_path):
     """
-    Load .mat file and return 'point_order' data
+    Load 'point_order' from a .mat file
     """
     mat_data = scipy.io.loadmat(mat_file_path)
-    
-    # Uncomment to check keys in the .mat file if needed
-    # print("Keys in the loaded .mat file:", mat_data.keys())
-    
     return mat_data['point_order']
 
-# Compute subfield measurements (thickness, width, length)
 def compute_subfield_measures(scan_folder_path, subfield, point_order_mat):
     """
-    Compute subfield measures including thickness, width, and length
+    Compute subfield measurements: thickness, width, length
     """
-    # Load point_order data
     point_order = load_point_order(point_order_mat)
     
-    # Construct VTK file paths
     pt_file = os.path.join(scan_folder_path, f'{subfield}_pt_refined.vtk')
     ps_file = os.path.join(scan_folder_path, f'{subfield}_ps_refined.vtk')
     
-    # Read points from scan files (SkelPt and BdryPt)
-    SkelPt = read_vtk_points(ps_file)  # Read SkelPt from ps_refined.vtk
-    BdryPt = read_vtk_points(pt_file)  # Read BdryPt from pt_refined.vtk
+    SkelPt = read_vtk_points(ps_file)
+    BdryPt = read_vtk_points(pt_file)
     
-    # Compute refined_spokes and crest_spoke_length
     refined_spokes = BdryPt - SkelPt
     crest_spoke_length = np.linalg.norm(refined_spokes[1098:1162], axis=1)
     
-    # Compute skeletonPt_order
-    skeletonPt_order = np.zeros((17, 31), dtype=int)
-    skeletonPt_order[8:17, :] = point_order[:, 1:32]
-    for k in range(31):
-        skeletonPt_order[0:8, k] = point_order[1:9, 64-k]
+    skeletonPt_order = build_skeleton_order(point_order) - 1
     
-    # Compute width
     width1, width2 = compute_width(SkelPt, skeletonPt_order, crest_spoke_length)
-    
-    # Compute length
     Sub_length1, Sub_length2 = compute_length(SkelPt, skeletonPt_order, crest_spoke_length)
     
-    # Total width and length
     total_width = width1 + width2
     total_length = Sub_length1 + Sub_length2
     
-    # Compute thickness
     thickness = compute_thickness(BdryPt, SkelPt)
-    thickness_bilateral = np.diagonal(thickness)  # Extract diagonal as subfield thickness
-    inf_thickness = thickness_bilateral[:len(thickness_bilateral)//2]  # Inferior thickness
-    sup_thickness = thickness_bilateral[len(thickness_bilateral)//2:]  # Superior thickness
+    thickness_bilateral = np.diagonal(thickness)
+    inf_thickness = thickness_bilateral[:len(thickness_bilateral)//2]
+    sup_thickness = thickness_bilateral[len(thickness_bilateral)//2:]
     
     return inf_thickness, sup_thickness, width1, width2, total_width, Sub_length1, Sub_length2, total_length
 
 def compute_subfield_thickness(scan_folder_path, subfield):
-    
-    # Construct VTK file paths
+    """
+    Compute subfield thickness only
+    """
     pt_file = os.path.join(scan_folder_path, f'{subfield}_pt_refined.vtk')
     ps_file = os.path.join(scan_folder_path, f'{subfield}_ps_refined.vtk')
     
-    if os.path.exists(pt_file) and os.path.exists(ps_file):  # Ensure files exist
-        # Read VTK point data
+    if os.path.exists(pt_file) and os.path.exists(ps_file):
         pt_points = read_vtk_points(pt_file)
         ps_points = read_vtk_points(ps_file)
         
-        # Compute subfield thickness
         thickness = compute_thickness(pt_points, ps_points)
-        thickness_bilateral = np.diagonal(thickness)  # Extract diagonal as subfield thickness
-        
-        # Merge superior and inferior thickness
+        thickness_bilateral = np.diagonal(thickness)
         mid_index = len(thickness_bilateral) // 2
         subfield_thickness = thickness_bilateral[:mid_index] + thickness_bilateral[mid_index:]
         
@@ -171,35 +185,30 @@ def compute_subfield_thickness(scan_folder_path, subfield):
         print(f"Error: VTK files for subfield {subfield} not found!")
         return None
 
-# Main function
 def process_followups(followups_path, output_path, point_order_mat):
-    # Read subfield_list_00.xlsx to get subfield names and number of points
-    subfield_df = pd.read_excel('/home/nagao/subfield_list_00.xlsx', header=None)
-    subfield_list = subfield_df.iloc[:, 0].tolist()  # Subfield names
+    """
+    Process all subjects and scans to compute hippocampal subfield measures
+    and save the results into an Excel file
+    """
+    subfield_df = pd.read_excel('/home/guolab/HippMetric/subfield_list_00.xlsx', header=None)
+    subfield_list = subfield_df.iloc[:, 0].tolist()
     print(f"All Subfields: {subfield_list}")
 
-    N_vector = subfield_df.iloc[:, 3].values  # Number of points
+    N_vector = subfield_df.iloc[:, 3].values
+    all_thickness = []
+    subfield_lengths = {}
 
-    all_thickness = []  # Store all thickness data
-    subfield_lengths = {}  # Store lengths of measurements for each subfield
-
-    # Iterate through each side and group
     for side in ['Left', 'Right']:
-        for group in ["AV1451_PET_ABETA_MRI","Baseline_AV1451_PET_ABETA_MRI"]:
+        for group in ["group"]:
             group_path = os.path.join(followups_path, side, group)
 
-            # Iterate through each subject folder
             for subject in os.listdir(group_path):
                 subject_path = os.path.join(group_path, subject)
-
                 if os.path.isdir(subject_path):
-                    # Get all scan folders starting with 'Scan'
                     scan_folders = [scan_folder for scan_folder in os.listdir(subject_path) if scan_folder.startswith('Scan')]
-
-                    # Sort scan folders by number in folder name (ScanXX)
                     scan_folders = sorted(scan_folders, key=lambda x: int(x[4:]))
+                    processed_scans = set()
 
-                    processed_scans = set()  # Track processed scans
                     for scan_folder in scan_folders:
                         if scan_folder in processed_scans:
                             continue
@@ -207,13 +216,10 @@ def process_followups(followups_path, output_path, point_order_mat):
                         scan_folder_path = os.path.join(subject_path, scan_folder)
                         if os.path.exists(scan_folder_path) and os.path.isdir(scan_folder_path):
                             processed_scans.add(scan_folder)
+                            scan_measures = [subject, scan_folder, side, group]
 
-                            scan_measures = [subject, scan_folder, side, group]  # Initialize scan data with Side and Group
-
-                            # Iterate through subfields and compute measurements
                             for i, subfield in enumerate(subfield_list):
                                 N_points = N_vector[i]
-
                                 if subfield == 'combined_label':
                                     inf_thickness, sup_thickness, width1, width2, total_width, Sub_length1, Sub_length2, total_length = compute_subfield_measures(scan_folder_path, subfield, point_order_mat)
                                     scan_measures.extend(inf_thickness)
@@ -224,7 +230,6 @@ def process_followups(followups_path, output_path, point_order_mat):
                                     scan_measures.append(Sub_length1)
                                     scan_measures.append(Sub_length2)
                                     scan_measures.append(total_length)
-
                                     subfield_lengths[subfield] = {
                                         'InfThickness': len(inf_thickness),
                                         'SupThickness': len(sup_thickness),
@@ -232,20 +237,15 @@ def process_followups(followups_path, output_path, point_order_mat):
                                         'VenWidth': len(width2),
                                         'Width': len(total_width),
                                     }
-
                                 else:
                                     subfield_thickness = compute_subfield_thickness(scan_folder_path, subfield)
                                     scan_measures.extend(subfield_thickness)
-
                                     subfield_lengths[subfield] = {'Thickness': len(subfield_thickness)}
 
                             all_thickness.append(scan_measures)
                             print(f"Completed Side {side}, Group {group}, Subject {subject}, Scan {scan_folder}")
 
-    # Add 'Side' and 'Group' to column headers
     columns = ["Subject ID", "Scan ID", "Side", "Group"]
-
-    # Construct headers for each subfield
     for subfield in subfield_list:
         if subfield == 'combined_label':
             lengths = subfield_lengths.get(subfield, {})
@@ -261,16 +261,12 @@ def process_followups(followups_path, output_path, point_order_mat):
             lengths = subfield_lengths.get(subfield, {})
             columns += [f'{subfield} Thickness {i}' for i in range(1, lengths.get('Thickness', 0) + 1)]
 
-    # Convert to DataFrame
     thickness_df = pd.DataFrame(all_thickness, columns=columns)
-
-    # Save to Excel
-    thickness_df.to_excel(output_path, index=False) 
+    thickness_df.to_excel(output_path, index=False)
 
 if __name__ == '__main__':
-
-    output_path = "/home/nagao/adni_data/Measures2_AV1451_PET_ABETA_MRI.xlsx"
-    followups_path = '/home/nagao/adni_data/FollowUps2'
-    point_order_mat = '/home/nagao/point_order_skeleton.mat'
+    output_path = "/Data/ADNI/Hippocampus/test/Measures.xlsx"
+    followups_path = '/Data/ADNI/Hippocampus/test/FollowUps'
+    point_order_mat = '/home/guolab/HippMetric/point_order_skeleton.mat'
 
     process_followups(followups_path, output_path, point_order_mat)
