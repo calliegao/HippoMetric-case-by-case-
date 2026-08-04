@@ -13,6 +13,6 @@ This repository provides tools for:
 ## Quick Start
 
 ```bash
-git clone https://github.com/yourusername/HippMetric.git
-cd HippMetric
+git clone https://github.com/yourusername/hippmetric.git
+cd hippmetric
 pip install -r requirements.txt
