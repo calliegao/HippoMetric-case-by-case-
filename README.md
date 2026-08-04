@@ -1,4 +1,4 @@
-# HippoMetric
+# HippMetric
 
 HippMetric is a hippocampal morphometry pipeline based on medial-axis geometry.
 
