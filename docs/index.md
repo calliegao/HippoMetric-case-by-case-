@@ -1,6 +1,6 @@
-# Welcome to the HippoMetric Documentation
+# Welcome to the HippMetric Documentation
 
-This documentation provides a detailed guide to install and use the **HippoMetric** pipeline.
+This documentation provides a detailed guide to install and use the **HippMetric** pipeline.
 
 ```{toctree}
 :maxdepth: 2
@@ -14,11 +14,11 @@ References.md
 
 [![Python Version](https://img.shields.io/badge/Python-3.8+-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](license.md)
-[![Documentation Status](https://readthedocs.org/projects/hippometric/badge/?version=latest)](https://hippometric.readthedocs.io/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/hippmetric/badge/?version=latest)](https://hippmetric.readthedocs.io/en/latest/?badge=latest)
 
 ---
 
-**HippoMetric** is a lightweight and flexible Python-based toolkit for hippocampal shape modeling and subfield-level morphometric analysis from structural MRI data.
+**HippMetric** is a lightweight and flexible Python-based toolkit for hippocampal shape modeling and subfield-level morphometric analysis from structural MRI data.
 
 The toolkit provides:
 
