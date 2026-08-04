@@ -1,6 +1,6 @@
 # 🚀 Getting Started
 
-## Theoretical Foundations of HippoMetric
+## Theoretical Foundations of HippMetric
 
 ### Introduction to the Longitudinal Lamellar Organization of the Hippocampus
 
@@ -39,7 +39,7 @@ This **radial map** ensures a one-to-one correspondence between the medial surfa
 
 ### 1. Prepare Your Data
 
-HippoMetric requires structural T1-weighted MRI scans that have been processed with FreeSurfer.
+HippMetric requires structural T1-weighted MRI scans that have been processed with FreeSurfer.
 
 We recommend organizing your data by group, subject, and scan session, like this:
 
@@ -74,26 +74,27 @@ sub-001/
 ```
 Each scan folder (e.g., scan01/) must be a valid FreeSurfer subject directory containing mri/, surf/, label/, and other subfolders required for downstream processing.
 
-Alternatively, you can first run recon-all following your original raw data structure, and then reorganize the output into the above format before using HippoMetric.
+Alternatively, you can first run recon-all following your original raw data structure, and then reorganize the output into the above format before using HippMetric.
 
 ---
 
-### 2. Run HippoMetric main pipeline
+### 2. Run HippMetric main pipeline
 
-After FreeSurfer processing, run HippoMetric’s segmentation module to extract hippocampal subfields and generate initial surface meshes.
+After FreeSurfer processing, run HippMetric’s segmentation module to extract hippocampal subfields and generate initial surface meshes.
+
 
 Before running the main module, make sure you have activated the appropriate environment:
 
 ```bash
 conda activate deformetrica
 ```
-Then run the pipeline from the HippoMetric root directory:
+Then run the pipeline from the HippMetric root directory:
 
 ```bash
-python run_HippoMetric.py
+python run_HippMetric.py
 ```
 
-The run_HippoMetric.py script includes 10 modular steps, which can be selectively executed by adjusting the flags in the script (e.g., run_step1=True). This allows flexible control and easy debugging of each processing stage.
+The run_HippMetric.py script includes 10 modular steps, which can be selectively executed by adjusting the flags in the script (e.g., run_step1=True). This allows flexible control and easy debugging of each processing stage.
 
 Below is a description of each step for your reference:
 
@@ -237,7 +238,7 @@ Use QC’d pointwise features if you aim to detect fine-scale local changes or p
 
 ## Summary
 
-HippoMetric is a surface-based morphometry pipeline designed for biologically-informed modeling and precise quantification of hippocampal morphology across multiple timepoints.
+HippMetric is a surface-based morphometry pipeline designed for biologically-informed modeling and precise quantification of hippocampal morphology across multiple timepoints.
 
 The pipeline includes:
 
@@ -249,9 +250,9 @@ The pipeline includes:
 - Quality control of geometric measurements
 - Regrouping of vertex-wise features into biologically meaningful composite indices
 
-With its modular design, HippoMetric enables flexible processing for both longitudinal and cross-sectional studies, and supports high-throughput batch analysis.
+With its modular design, HippMetric enables flexible processing for both longitudinal and cross-sectional studies, and supports high-throughput batch analysis.
 
 Final outputs are structured in CSV format, ready for statistical analysis in tools such as R, Python, or MATLAB.  
 Researchers can choose between **fine-grained vertex-wise features** or **regrouped region-level indices** depending on their analytical needs.
 
-HippoMetric is especially suited for detecting subtle morphological changes in hippocampus-related neurological and psychiatric disorders.
+HippMetric is especially suited for detecting subtle morphological changes in hippocampus-related neurological and psychiatric disorders.
