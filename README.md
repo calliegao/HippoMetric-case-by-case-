@@ -14,5 +14,5 @@ This repository provides tools for:
 
 ```bash
 git clone https://github.com/yourusername/HippMetric.git
-cd HippoMetric
+cd HippMetric
 pip install -r requirements.txt
